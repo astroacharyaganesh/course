@@ -1,28 +1,38 @@
 import React from 'react';
 import { Award, Users, Tv, Quote } from 'lucide-react';
+import { motion } from 'motion/react';
+import acharyaImg from '../../assets/images/acharya_ganesh_portrait_1788771630566.jpg';
+import { ParallaxTiltCard } from '../ui/ParallaxTiltCard';
+import { FloatingZodiacSymbols } from '../ui/FloatingZodiacSymbols';
 
 export const MentorBanner: React.FC = () => {
   return (
-    <section className="py-12 sm:py-16 bg-[#faf7f2]">
+    <section className="py-12 sm:py-16 bg-[#faf7f2] overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Dark Glowing Mentor Card */}
         <div className="relative rounded-3xl bg-gradient-to-r from-[#070b14] via-[#0d1425] to-[#121c33] border border-[#263553] p-6 sm:p-8 lg:p-10 text-white shadow-2xl overflow-hidden">
           
           {/* Subtle Ambient Golden Glow */}
-          <div className="absolute -top-20 right-10 w-80 h-80 bg-[#d4a34b]/10 rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute -top-20 right-10 w-80 h-80 bg-[#d4a34b]/15 rounded-full blur-3xl pointer-events-none aurora-glow" />
+          <FloatingZodiacSymbols count={6} className="opacity-20 text-[#e8b560]" />
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10">
             
-            {/* Left: Mentor Portrait with Golden Ring */}
+            {/* Left: Mentor Portrait with Parallax Tilt & Golden Ring */}
             <div className="lg:col-span-3 flex justify-center lg:justify-start">
-              <div className="relative w-36 h-36 sm:w-44 sm:h-44 rounded-2xl overflow-hidden border-2 border-[#d4a34b] shadow-2xl bg-[#131b2e]">
-                <img
-                  src="/src/assets/images/acharya_ganesh_portrait_1788771630566.jpg"
-                  alt="Celebrity Astrologer Acharya Ganesh"
-                  className="w-full h-full object-cover object-top"
-                />
-              </div>
+              <ParallaxTiltCard maxTilt={6} glowColor="rgba(232, 181, 96, 0.4)">
+                <div className="relative w-36 h-36 sm:w-44 sm:h-44 rounded-2xl overflow-hidden border-2 border-[#d4a34b] shadow-2xl bg-[#131b2e] group">
+                  <img
+                    src={acharyaImg}
+                    alt="Celebrity Astrologer Acharya Ganesh"
+                    className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700"
+                    onError={(e) => {
+                      (e.target as HTMLImageElement).src = '/assets/images/acharya_ganesh_portrait_1788771630566.jpg';
+                    }}
+                  />
+                </div>
+              </ParallaxTiltCard>
             </div>
 
             {/* Center: Mentor Profile, Experience & Media Presence */}
@@ -36,71 +46,68 @@ export const MentorBanner: React.FC = () => {
                   Acharya Ganesh
                 </h3>
                 <div className="text-xs sm:text-sm text-[#cbd5e1] font-medium">
-                  Celebrity Vedic Astrologer & Spiritual Guide
+                  Celebrity Vedic Astrologer &amp; Spiritual Guide
                 </div>
               </div>
 
-              {/* 3 Quick Mentor Stats */}
+              {/* 3 Quick Mentor Stats with Hover Lift */}
               <div className="flex flex-wrap items-center justify-center lg:justify-start gap-4 pt-1">
-                <div className="flex items-center gap-2 text-left">
+                <motion.div whileHover={{ y: -2 }} className="flex items-center gap-2 text-left bg-white/5 border border-white/10 px-3 py-1.5 rounded-xl">
                   <Award className="w-4 h-4 text-[#e8b560]" />
                   <div>
                     <div className="text-xs font-bold text-white">17+</div>
                     <div className="text-[10px] text-[#94a3b8]">Years Experience</div>
                   </div>
-                </div>
+                </motion.div>
 
-                <div className="flex items-center gap-2 text-left">
+                <motion.div whileHover={{ y: -2 }} className="flex items-center gap-2 text-left bg-white/5 border border-white/10 px-3 py-1.5 rounded-xl">
                   <Users className="w-4 h-4 text-[#e8b560]" />
                   <div>
                     <div className="text-xs font-bold text-white">50,000+</div>
                     <div className="text-[10px] text-[#94a3b8]">Students</div>
                   </div>
-                </div>
+                </motion.div>
 
-                <div className="flex items-center gap-2 text-left">
+                <motion.div whileHover={{ y: -2 }} className="flex items-center gap-2 text-left bg-white/5 border border-white/10 px-3 py-1.5 rounded-xl">
                   <Tv className="w-4 h-4 text-[#e8b560]" />
                   <div>
-                    <div className="text-xs font-bold text-white">TV Panelist</div>
-                    <div className="text-[10px] text-[#94a3b8]">& Media Presence</div>
+                    <div className="text-xs font-bold text-white">National TV</div>
+                    <div className="text-[10px] text-[#94a3b8]">Panelist</div>
                   </div>
-                </div>
+                </motion.div>
               </div>
 
-              {/* Media Presence Badges */}
-              <div className="pt-2 space-y-2">
-                <div className="text-[10px] uppercase tracking-wider text-[#94a3b8] font-bold">
-                  Featured On National Television:
+              {/* Media Badges */}
+              <div className="pt-2 text-left">
+                <div className="text-[10px] text-[#94a3b8] uppercase tracking-wider font-semibold mb-1.5">
+                  Featured On National Television
                 </div>
-                <div className="flex flex-wrap items-center justify-center lg:justify-start gap-2 sm:gap-3">
-                  <span className="px-3 py-1 rounded-md bg-[#162137] border border-[#2b3c5e] text-[11px] font-black tracking-wider text-white">
-                    INDIA TV
+                <div className="flex flex-wrap items-center gap-2 text-[11px] font-semibold text-[#cbd5e1]">
+                  <span className="px-2.5 py-0.5 rounded-md bg-white/10 border border-white/10">
+                    Zee News
                   </span>
-                  <span className="px-3 py-1 rounded-md bg-[#162137] border border-[#2b3c5e] text-[11px] font-black tracking-wider text-[#ea580c]">
-                    ZEE NEWS
+                  <span className="px-2.5 py-0.5 rounded-md bg-white/10 border border-white/10">
+                    India TV
                   </span>
-                  <span className="px-3 py-1 rounded-md bg-[#162137] border border-[#2b3c5e] text-[11px] font-black tracking-wider text-[#f59e0b]">
-                    NEWS 24
+                  <span className="px-2.5 py-0.5 rounded-md bg-white/10 border border-white/10">
+                    Aaj Tak
                   </span>
-                  <span className="px-3 py-1 rounded-md bg-[#162137] border border-[#2b3c5e] text-[11px] font-black tracking-wider text-[#dc2626]">
-                    AAJ TAK
+                  <span className="px-2.5 py-0.5 rounded-md bg-white/10 border border-white/10">
+                    News18
                   </span>
                 </div>
               </div>
-
             </div>
 
-            {/* Right: Golden Quote Callout */}
-            <div className="lg:col-span-4 border-t lg:border-t-0 lg:border-l border-[#263553] pt-6 lg:pt-0 lg:pl-8 flex flex-col justify-center">
-              <div className="p-5 sm:p-6 rounded-2xl bg-[#111a2d]/80 border border-[#2b3c5e] space-y-3 relative">
+            {/* Right: Personal Message Quote */}
+            <div className="lg:col-span-4 flex justify-center lg:justify-end">
+              <div className="p-6 rounded-2xl bg-white/5 border border-white/10 space-y-3 relative text-left">
                 <Quote className="w-6 h-6 text-[#e8b560]/40 absolute top-3 right-3" />
-                <p className="font-serif italic text-xs sm:text-sm text-[#f1f5f9] leading-relaxed">
-                  "Astrology is not just about predicting the future, it's about understanding your present and creating a better tomorrow."
+                <p className="font-serif italic text-xs sm:text-sm text-[#e2e8f0] leading-relaxed">
+                  "Astrology is not about predicting a fixed fate. It is the sacred science of timing your karma to achieve peace, purpose, and prosperity."
                 </p>
-                <div className="text-right">
-                  <span className="font-cinzel text-xs text-[#e8b560] font-bold tracking-wider">
-                    — Acharya Ganesh
-                  </span>
+                <div className="text-[11px] text-[#e8b560] font-cinzel font-bold tracking-wider">
+                  — Acharya Ganesh
                 </div>
               </div>
             </div>
@@ -108,7 +115,6 @@ export const MentorBanner: React.FC = () => {
           </div>
 
         </div>
-
       </div>
     </section>
   );

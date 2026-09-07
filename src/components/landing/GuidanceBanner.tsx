@@ -1,6 +1,9 @@
 import React from 'react';
 import { ArrowRight, MessageSquare, Compass, ShieldCheck, Target, Sparkles } from 'lucide-react';
+import { motion } from 'motion/react';
 import acharyaImg from '../../assets/images/acharya_ganesh_portrait_1788771630566.jpg';
+import { MagneticButton } from '../ui/MagneticButton';
+import { ParallaxTiltCard } from '../ui/ParallaxTiltCard';
 
 interface GuidanceBannerProps {
   onBookConsultationClick: () => void;
@@ -31,7 +34,7 @@ export const GuidanceBanner: React.FC<GuidanceBannerProps> = ({
   ];
 
   return (
-    <section className="py-8 sm:py-12 bg-[#faf7f2]">
+    <section className="py-8 sm:py-12 bg-[#faf7f2] overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Light Brown Consultation Card with high-visibility fonts */}
@@ -39,29 +42,31 @@ export const GuidanceBanner: React.FC<GuidanceBannerProps> = ({
           
           {/* Subtle Background Mandala Halo */}
           <div className="absolute -left-12 -bottom-12 w-64 h-64 rounded-full border border-[#caa05b]/25 bg-radial from-white/30 to-transparent pointer-events-none" />
-          <div className="absolute right-0 top-0 w-80 h-80 bg-white/20 rounded-full blur-2xl pointer-events-none" />
+          <div className="absolute right-0 top-0 w-80 h-80 bg-white/20 rounded-full blur-2xl pointer-events-none aurora-glow" />
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10">
             
-            {/* Left: Circular Astrologer Photo with Zodiac Halo */}
+            {/* Left: Circular Astrologer Photo with Parallax Tilt & Halo */}
             <div className="lg:col-span-3 flex justify-center lg:justify-start">
-              <div className="relative w-36 h-36 sm:w-44 sm:h-44 flex items-center justify-center">
-                {/* Outer Dashed Ring */}
-                <div className="absolute inset-0 rounded-full border border-dashed border-[#caa05b]/60 animate-[spin_80s_linear_infinite]" />
-                <div className="absolute inset-2 rounded-full border border-[#caa05b]/40" />
-                
-                {/* Image Inside Circle */}
-                <div className="w-28 h-28 sm:w-36 sm:h-36 rounded-full overflow-hidden border-2 border-[#caa05b] shadow-xl bg-[#241407]">
-                  <img
-                    src={acharyaImg}
-                    alt="Acharya Ganesh"
-                    className="w-full h-full object-cover object-top"
-                    onError={(e) => {
-                      (e.target as HTMLImageElement).src = '/assets/images/acharya_ganesh_portrait_1788771630566.jpg';
-                    }}
-                  />
+              <ParallaxTiltCard maxTilt={6} glowColor="rgba(218, 165, 32, 0.35)">
+                <div className="relative w-36 h-36 sm:w-44 sm:h-44 flex items-center justify-center">
+                  {/* Outer Dashed Ring */}
+                  <div className="absolute inset-0 rounded-full border border-dashed border-[#caa05b]/60 animate-[spin_80s_linear_infinite]" />
+                  <div className="absolute inset-2 rounded-full border border-[#caa05b]/40" />
+                  
+                  {/* Image Inside Circle */}
+                  <div className="w-28 h-28 sm:w-36 sm:h-36 rounded-full overflow-hidden border-2 border-[#caa05b] shadow-xl bg-[#241407]">
+                    <img
+                      src={acharyaImg}
+                      alt="Acharya Ganesh"
+                      className="w-full h-full object-cover object-top hover:scale-105 transition-transform duration-700"
+                      onError={(e) => {
+                        (e.target as HTMLImageElement).src = '/assets/images/acharya_ganesh_portrait_1788771630566.jpg';
+                      }}
+                    />
+                  </div>
                 </div>
-              </div>
+              </ParallaxTiltCard>
             </div>
 
             {/* Center: Headline, Explanatory Text, Action Buttons */}
@@ -76,36 +81,42 @@ export const GuidanceBanner: React.FC<GuidanceBannerProps> = ({
               </p>
 
               <div className="flex flex-wrap items-center justify-center lg:justify-start gap-3 pt-2">
-                <button
+                <MagneticButton
                   onClick={onBookConsultationClick}
-                  className="px-6 py-3 rounded-full bg-gradient-to-r from-[#9c4d12] via-[#b35e19] to-[#8a400c] hover:from-[#ab5615] hover:to-[#783609] text-[#fff8ee] font-bold text-xs tracking-wider uppercase transition-all shadow-md hover:scale-105 cursor-pointer flex items-center gap-1.5 border border-[#caa05b]"
+                  className="px-6 py-3 rounded-full bg-gradient-to-r from-[#9c4d12] via-[#b35e19] to-[#8a400c] hover:from-[#ab5615] hover:to-[#783609] text-[#fff8ee] font-bold text-xs tracking-wider uppercase transition-all shadow-md border border-[#caa05b]"
                 >
                   <span>Book Consultation</span>
                   <ArrowRight className="w-3.5 h-3.5" />
-                </button>
+                </MagneticButton>
 
-                <button
+                <motion.button
+                  whileHover={{ scale: 1.03, y: -2 }}
+                  whileTap={{ scale: 0.98 }}
                   onClick={onTalkToTeamClick}
                   className="px-5 py-3 rounded-full bg-[#faecd4] hover:bg-[#f6e1be] text-[#1f1105] border border-[#caa05b] text-xs font-bold tracking-wide transition-all cursor-pointer flex items-center gap-2 shadow-xs"
                 >
                   <MessageSquare className="w-3.5 h-3.5 text-[#9c450f]" />
                   <span>Talk to Our Team</span>
-                </button>
+                </motion.button>
               </div>
             </div>
 
-            {/* Right: 4 Highlight Points with high legibility */}
+            {/* Right: 4 Highlight Points with hover micro-interaction */}
             <div className="lg:col-span-4 border-t lg:border-t-0 lg:border-l border-[#caa05b]/40 pt-6 lg:pt-0 lg:pl-8">
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-3.5">
                 {highlights.map((item, idx) => (
-                  <div key={idx} className="flex items-center gap-3">
+                  <motion.div 
+                    key={idx} 
+                    whileHover={{ x: 4 }}
+                    className="flex items-center gap-3 transition-transform"
+                  >
                     <div className="w-8 h-8 rounded-lg bg-[#faecd4] border border-[#caa05b] flex items-center justify-center shrink-0 shadow-xs">
                       {item.icon}
                     </div>
                     <span className="text-xs sm:text-sm font-bold text-[#1f1105]">
                       {item.text}
                     </span>
-                  </div>
+                  </motion.div>
                 ))}
               </div>
             </div>

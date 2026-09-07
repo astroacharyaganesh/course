@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
+import { motion } from 'motion/react';
 import { LandingNavbar } from './components/landing/LandingNavbar';
 import { HeroLanding } from './components/landing/HeroLanding';
 import { MetricsStrip } from './components/landing/MetricsStrip';
-import { GuidanceBanner } from './components/landing/GuidanceBanner';
+import { MarsTableOfContents } from './components/landing/MarsTableOfContents';
 import { WhyLearnSection } from './components/landing/WhyLearnSection';
 import { LearningJourney } from './components/landing/LearningJourney';
 import { CourseModulesSection } from './components/landing/CourseModulesSection';
@@ -13,6 +14,7 @@ import { PitruPakshCourseBanner } from './components/landing/PitruPakshCourseBan
 import { BottomCtaBanner } from './components/landing/BottomCtaBanner';
 import { SiteFooter } from './components/landing/SiteFooter';
 import { Modals } from './components/landing/Modals';
+import { PremiumPageLoader } from './components/ui/PremiumPageLoader';
 
 export default function App() {
   // Modal states
@@ -30,32 +32,41 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-[#faf7f2] text-[#2c1e16] font-sans-ui selection:bg-[#dfba88]/40 selection:text-[#3b1c0b]">
+      {/* Premium Initial Page Reveal / Loader */}
+      <PremiumPageLoader />
+
       {/* 1. Header / Navbar */}
       <LandingNavbar onEnrollClick={() => setEnrollOpen(true)} />
 
-      <main>
-        {/* 1. Primary Featured Course: Pitru Paksh Special Masterclass Banner (Top Focal Selling Point) */}
+      <motion.main
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.6, ease: 'easeOut' }}
+      >
+        {/* 1. Primary Featured Course: Pitru Paksh Special Masterclass Banner */}
         <PitruPakshCourseBanner
           onBuyNowClick={() => setEnrollOpen(true)}
         />
 
-        {/* 2. 5-Item Metrics Strip */}
+        {/* 2. 5-Item Metrics Strip with Count-Up Numbers */}
         <MetricsStrip />
 
-        {/* 3. Master Vedic Astrology Hero Section */}
+        {/* 2.5. Mars (Mangal) Masterclass Table of Contents */}
+        <MarsTableOfContents
+          onEnrollClick={() => setEnrollOpen(true)}
+        />
+
+        {/* 3. Master Vedic Astrology Hero Section with Mouse Parallax & Zodiacs */}
         <HeroLanding
           onEnrollClick={() => setEnrollOpen(true)}
           onWatchDemoClick={() => setDemoVideoOpen(true)}
         />
 
-        {/* 4. Need Personal Guidance Before Joining? */}
-        <GuidanceBanner
+        {/* 4. Why Learn From Acharya Ganesh? (8 Feature Cards + Guidance CTA) */}
+        <WhyLearnSection
           onBookConsultationClick={() => setConsultationOpen(true)}
           onTalkToTeamClick={() => setConsultationOpen(true)}
         />
-
-        {/* 5. Why Learn From Acharya Ganesh? (8 Cards + Photo) */}
-        <WhyLearnSection />
 
         {/* 6. Your Learning Journey (7-Step Stepper Flow) */}
         <LearningJourney />
@@ -85,12 +96,12 @@ export default function App() {
           onEnrollClick={() => setEnrollOpen(true)}
           onBookConsultationClick={() => setConsultationOpen(true)}
         />
-      </main>
+      </motion.main>
 
-      {/* 13. Site Footer */}
+      {/* 12. Site Footer */}
       <SiteFooter />
 
-      {/* 14. Interactive Modals (Enrollment, Consultation, Demo Video, Certificate, Syllabus) */}
+      {/* 13. Interactive Modals (Enrollment, Consultation, Demo Video, Certificate, Syllabus) */}
       <Modals
         enrollOpen={enrollOpen}
         onCloseEnroll={() => setEnrollOpen(false)}
