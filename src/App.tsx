@@ -1,174 +1,112 @@
-/**
- * @license
- * SPDX-License-Identifier: Apache-2.0
- */
-
-import React, { useState, useEffect } from 'react';
-import { AcharyaNavbar } from './components/AcharyaNavbar';
-import { AcharyaHeroBanner } from './components/AcharyaHeroBanner';
-import { CourseInquiryForm } from './components/CourseInquiryForm';
-import { CourseMainContent } from './components/CourseMainContent';
-import { CourseSidebar } from './components/CourseSidebar';
-import { AcharyaFooter } from './components/AcharyaFooter';
-import { WhatsAppButton } from './components/WhatsAppButton';
-import { AcharyaModal } from './components/AcharyaModal';
-import { Sparkles, ArrowRight, ShieldCheck, Phone } from 'lucide-react';
+import React, { useState } from 'react';
+import { LandingNavbar } from './components/landing/LandingNavbar';
+import { HeroLanding } from './components/landing/HeroLanding';
+import { MetricsStrip } from './components/landing/MetricsStrip';
+import { GuidanceBanner } from './components/landing/GuidanceBanner';
+import { WhyLearnSection } from './components/landing/WhyLearnSection';
+import { LearningJourney } from './components/landing/LearningJourney';
+import { CourseModulesSection } from './components/landing/CourseModulesSection';
+import { MentorBanner } from './components/landing/MentorBanner';
+import { StudentTestimonials } from './components/landing/StudentTestimonials';
+import { CertificateTocFaq } from './components/landing/CertificateTocFaq';
+import { PitruPakshCourseBanner } from './components/landing/PitruPakshCourseBanner';
+import { BottomCtaBanner } from './components/landing/BottomCtaBanner';
+import { SiteFooter } from './components/landing/SiteFooter';
+import { Modals } from './components/landing/Modals';
 
 export default function App() {
-  const [modalState, setModalState] = useState<{
-    isOpen: boolean;
-    type: 'buy' | 'login' | 'courseLogin' | 'videoPreview';
-    videoTitle?: string;
-  }>({
-    isOpen: false,
-    type: 'buy',
-  });
+  // Modal states
+  const [enrollOpen, setEnrollOpen] = useState(false);
+  const [consultationOpen, setConsultationOpen] = useState(false);
+  const [demoVideoOpen, setDemoVideoOpen] = useState(false);
+  const [certificateOpen, setCertificateOpen] = useState(false);
+  const [syllabusOpen, setSyllabusOpen] = useState(false);
+  const [selectedModuleId, setSelectedModuleId] = useState<number | null>(null);
 
-  const [showStickyBar, setShowStickyBar] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      // Show sticky CTA bar once user has scrolled past the main hero banner (550px)
-      if (window.scrollY > 550) {
-        setShowStickyBar(true);
-      } else {
-        setShowStickyBar(false);
-      }
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  const handleOpenBuyNow = () => {
-    setModalState({ isOpen: true, type: 'buy' });
-  };
-
-  const handleOpenLogin = () => {
-    setModalState({ isOpen: true, type: 'login' });
-  };
-
-  const handleOpenCourseLogin = () => {
-    setModalState({ isOpen: true, type: 'courseLogin' });
-  };
-
-  const handlePlayPreview = (title: string) => {
-    setModalState({ isOpen: true, type: 'videoPreview', videoTitle: title });
-  };
-
-  const handleCloseModal = () => {
-    setModalState((prev) => ({ ...prev, isOpen: false }));
+  const handleSelectModule = (moduleId: number) => {
+    setSelectedModuleId(moduleId);
+    setSyllabusOpen(true);
   };
 
   return (
-    <div className="min-h-screen bg-white text-[#2c2c2c] flex flex-col font-sans-ui selection:bg-[#ebdcc8] selection:text-[#381c10]">
-      
-      {/* 1. Header / Navbar matching screenshot */}
-      <AcharyaNavbar
-        onLoginClick={handleOpenLogin}
-        onCourseLoginClick={handleOpenCourseLogin}
-      />
+    <div className="min-h-screen bg-[#faf7f2] text-[#2c1e16] font-sans-ui selection:bg-[#dfba88]/40 selection:text-[#3b1c0b]">
+      {/* 1. Header / Navbar */}
+      <LandingNavbar onEnrollClick={() => setEnrollOpen(true)} />
 
-      {/* Main Content Area */}
-      <main className="flex-1 pb-16">
-        
-        {/* 2. Top Hero / Banner Card matching screenshot */}
-        <AcharyaHeroBanner
-          onBuyNowClick={handleOpenBuyNow}
+      <main>
+        {/* 2. Hero Section */}
+        <HeroLanding
+          onEnrollClick={() => setEnrollOpen(true)}
+          onWatchDemoClick={() => setDemoVideoOpen(true)}
         />
 
-        {/* 3. 3-Column Section matching screenshot */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-            
-            {/* Left Column: Have questions about this course? Inquiry Form */}
-            <div className="lg:col-span-3 order-2 lg:order-1">
-              <CourseInquiryForm />
-            </div>
+        {/* 3. 5-Item Metrics Strip */}
+        <MetricsStrip />
 
-            {/* Middle Column: Course Overview & Simple Table of Contents */}
-            <div className="lg:col-span-6 order-1 lg:order-2">
-              <CourseMainContent
-                onPlayPreview={handlePlayPreview}
-                onBuyNowClick={handleOpenBuyNow}
-              />
-            </div>
+        {/* 4. Need Personal Guidance Before Joining? */}
+        <GuidanceBanner
+          onBookConsultationClick={() => setConsultationOpen(true)}
+          onTalkToTeamClick={() => setConsultationOpen(true)}
+        />
 
-            {/* Right Column: Course Summary Card with BUY NOW */}
-            <div className="lg:col-span-3 order-3 lg:order-3">
-              <CourseSidebar
-                onBuyNowClick={handleOpenBuyNow}
-              />
-            </div>
+        {/* 5. Why Learn From Acharya Ganesh? (8 Cards + Photo) */}
+        <WhyLearnSection />
 
-          </div>
-        </div>
+        {/* 6. Your Learning Journey (7-Step Stepper Flow) */}
+        <LearningJourney />
 
+        {/* 7. Course Modules (8 Modules Grid + Interactive Experience Card) */}
+        <CourseModulesSection
+          onViewFullSyllabus={() => {
+            setSelectedModuleId(null);
+            setSyllabusOpen(true);
+          }}
+          onSelectModule={handleSelectModule}
+        />
+
+        {/* 8. Meet Your Mentor Banner with Media Logos */}
+        <MentorBanner />
+
+        {/* 9. What Our Students Say (4 Testimonial Cards) */}
+        <StudentTestimonials />
+
+        {/* 10. Three-Column Section: Certificate Preview | Table of Contents | FAQ */}
+        <CertificateTocFaq
+          onPreviewCertificate={() => setCertificateOpen(true)}
+        />
+
+        {/* 11. Pitru Paksh Special Course Offer Card (₹1,500) */}
+        <PitruPakshCourseBanner
+          onBuyNowClick={() => setEnrollOpen(true)}
+        />
+
+        {/* 12. Bottom CTA Banner with Quote */}
+        <BottomCtaBanner
+          onEnrollClick={() => setEnrollOpen(true)}
+          onBookConsultationClick={() => setConsultationOpen(true)}
+        />
       </main>
 
-      {/* 4. Complete Footer matching screenshot */}
-      <AcharyaFooter />
+      {/* 13. Site Footer */}
+      <SiteFooter />
 
-      {/* 5. Floating WhatsApp Button matching screenshot */}
-      <WhatsAppButton />
-
-      {/* 6. Sticky Bottom Conversion Ribbon ("Feel CTA" on Scroll) */}
-      {showStickyBar && (
-        <aside 
-          id="sticky-conversion-bar"
-          aria-label="Course quick registration bar"
-          className="fixed bottom-0 inset-x-0 z-40 bg-[#faeee1]/95 border-t border-[#ebd6c2] backdrop-blur-md py-3 px-4 shadow-xl transition-all animate-in slide-in-from-bottom duration-300"
-        >
-          <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
-            
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-full bg-[#e8be89] text-[#381c10] flex items-center justify-center font-bold shrink-0">
-                ॐ
-              </div>
-              <div className="text-left">
-                <div className="text-xs sm:text-sm font-bold text-[#381c10] flex items-center gap-2">
-                  <span>Building Blocks of Astrology: Planets, Signs & Houses</span>
-                  <span className="text-[10px] bg-[#381c10] text-white px-2 py-0.5 rounded-full font-semibold">
-                    100% FREE
-                  </span>
-                </div>
-                <div className="text-[11px] text-[#6a4f40] flex items-center gap-2">
-                  <span>⭐ 4.9/5 (3,450+ Seekers)</span>
-                  <span className="hidden sm:inline">• 90 Mins Masterclass</span>
-                  <span className="hidden sm:inline">• Free Certificate</span>
-                </div>
-              </div>
-            </div>
-
-            <div className="flex items-center gap-3 w-full sm:w-auto justify-end">
-              <a
-                href="tel:+917300004325"
-                className="hidden md:flex items-center gap-1.5 text-xs font-semibold text-[#553b2e] hover:text-[#381c10] px-3 py-1.5"
-              >
-                <Phone className="w-3.5 h-3.5 text-[#a2531d]" />
-                <span>+91 73000-04325</span>
-              </a>
-
-              <button
-                onClick={handleOpenBuyNow}
-                className="w-full sm:w-auto px-7 py-2.5 rounded-full bg-[#a2531d] hover:bg-[#884214] text-white font-bold text-xs tracking-wider uppercase transition-all shadow-sm hover:shadow-md flex items-center justify-center gap-1.5 cursor-pointer"
-              >
-                <span>BUY NOW (FREE)</span>
-                <ArrowRight className="w-3.5 h-3.5" />
-              </button>
-            </div>
-
-          </div>
-        </aside>
-      )}
-
-      {/* 7. Interactive Modal for Enrollment, Login, and Previews */}
-      <AcharyaModal
-        isOpen={modalState.isOpen}
-        type={modalState.type}
-        videoTitle={modalState.videoTitle}
-        onClose={handleCloseModal}
+      {/* 14. Interactive Modals (Enrollment, Consultation, Demo Video, Certificate, Syllabus) */}
+      <Modals
+        enrollOpen={enrollOpen}
+        onCloseEnroll={() => setEnrollOpen(false)}
+        consultationOpen={consultationOpen}
+        onCloseConsultation={() => setConsultationOpen(false)}
+        demoVideoOpen={demoVideoOpen}
+        onCloseDemoVideo={() => setDemoVideoOpen(false)}
+        certificateOpen={certificateOpen}
+        onCloseCertificate={() => setCertificateOpen(false)}
+        syllabusOpen={syllabusOpen}
+        onCloseSyllabus={() => {
+          setSyllabusOpen(false);
+          setSelectedModuleId(null);
+        }}
+        selectedModuleId={selectedModuleId}
       />
-
     </div>
   );
 }
