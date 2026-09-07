@@ -1,5 +1,6 @@
 import React from 'react';
 import { Star, Users, Calendar, ArrowRight, Play, Sparkles } from 'lucide-react';
+import acharyaImg from '../../assets/images/acharya_ganesh_portrait_1788771630566.jpg';
 
 interface HeroLandingProps {
   onEnrollClick: () => void;
@@ -115,9 +116,12 @@ export const HeroLanding: React.FC<HeroLandingProps> = ({
               {/* Astrologer Image Frame */}
               <div className="relative z-10 w-[290px] sm:w-[330px] h-[340px] sm:h-[390px] rounded-3xl overflow-hidden border-2 border-[#caa05b] shadow-2xl bg-[#241407]">
                 <img
-                  src="/src/assets/images/acharya_ganesh_portrait_1788771630566.jpg"
+                  src={acharyaImg}
                   alt="Celebrity Astrologer Acharya Ganesh"
                   className="w-full h-full object-cover object-top hover:scale-105 transition-transform duration-700"
+                  onError={(e) => {
+                    (e.target as HTMLImageElement).src = '/assets/images/acharya_ganesh_portrait_1788771630566.jpg';
+                  }}
                 />
 
                 {/* Subtle vignette gradient at bottom of frame */}

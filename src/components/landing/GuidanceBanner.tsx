@@ -1,5 +1,6 @@
 import React from 'react';
 import { ArrowRight, MessageSquare, Compass, ShieldCheck, Target, Sparkles } from 'lucide-react';
+import acharyaImg from '../../assets/images/acharya_ganesh_portrait_1788771630566.jpg';
 
 interface GuidanceBannerProps {
   onBookConsultationClick: () => void;
@@ -52,9 +53,12 @@ export const GuidanceBanner: React.FC<GuidanceBannerProps> = ({
                 {/* Image Inside Circle */}
                 <div className="w-28 h-28 sm:w-36 sm:h-36 rounded-full overflow-hidden border-2 border-[#caa05b] shadow-xl bg-[#241407]">
                   <img
-                    src="/src/assets/images/acharya_ganesh_portrait_1788771630566.jpg"
+                    src={acharyaImg}
                     alt="Acharya Ganesh"
                     className="w-full h-full object-cover object-top"
+                    onError={(e) => {
+                      (e.target as HTMLImageElement).src = '/assets/images/acharya_ganesh_portrait_1788771630566.jpg';
+                    }}
                   />
                 </div>
               </div>

@@ -11,7 +11,7 @@ export const LandingNavbar: React.FC<LandingNavbarProps> = ({ onEnrollClick }) =
   return (
     <header className="sticky top-0 z-50 bg-[#070b14]/95 backdrop-blur-md border-b border-[#caa05b]/30 text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-20">
+        <div className="flex items-center justify-between h-16 sm:h-18">
           
           {/* Brand Logo & Name */}
           <a href="#" className="flex items-center gap-3 group">

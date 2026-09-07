@@ -34,14 +34,19 @@ export default function App() {
       <LandingNavbar onEnrollClick={() => setEnrollOpen(true)} />
 
       <main>
-        {/* 2. Hero Section */}
+        {/* 1. Primary Featured Course: Pitru Paksh Special Masterclass Banner (Top Focal Selling Point) */}
+        <PitruPakshCourseBanner
+          onBuyNowClick={() => setEnrollOpen(true)}
+        />
+
+        {/* 2. 5-Item Metrics Strip */}
+        <MetricsStrip />
+
+        {/* 3. Master Vedic Astrology Hero Section */}
         <HeroLanding
           onEnrollClick={() => setEnrollOpen(true)}
           onWatchDemoClick={() => setDemoVideoOpen(true)}
         />
-
-        {/* 3. 5-Item Metrics Strip */}
-        <MetricsStrip />
 
         {/* 4. Need Personal Guidance Before Joining? */}
         <GuidanceBanner
@@ -75,12 +80,7 @@ export default function App() {
           onPreviewCertificate={() => setCertificateOpen(true)}
         />
 
-        {/* 11. Pitru Paksh Special Course Offer Card (₹1,500) */}
-        <PitruPakshCourseBanner
-          onBuyNowClick={() => setEnrollOpen(true)}
-        />
-
-        {/* 12. Bottom CTA Banner with Quote */}
+        {/* 11. Bottom CTA Banner with Quote */}
         <BottomCtaBanner
           onEnrollClick={() => setEnrollOpen(true)}
           onBookConsultationClick={() => setConsultationOpen(true)}
